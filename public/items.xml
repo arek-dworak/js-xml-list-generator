@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<items>
+    <book>
+        <author>AAA</author>
+        <title>BBB</title>
+    </book>
+    <car>
+        <mark>Audi</mark>
+        <model>A4</model>
+        <year>1997</year>
+    </car>
+    <project>
+        <name>XYZ</name>
+        <version>1.0</version>
+        <author>you</author>
+        <technology>JS</technology>
+    </project>
+</items>   

@@ -7,11 +7,13 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <section>
-        <label for="xml">XML Input</label>
-        <textarea id="xml" name="xml"></textarea>
-    </section>
-    <section id="list"></section>
+    <div class="wrapper">
+        <section>
+            <label for="xml">Insert XML here: <span class="error"></span></label>
+            <textarea id="xml" name="xml"></textarea>
+        </section>
+        <section id="list"></section>
+    </div>
     
     <script src="bower_components/codemirror/lib/codemirror.js"></script>
     <script src="bower_components/codemirror/mode/xml/xml.js"></script>

@@ -8,7 +8,7 @@ const cleanCSS = require('gulp-clean-css');
 
 gulp.task('js', () => {
     browserify([
-        'script/src/app.js'
+        'script/app.js'
     ])
     .transform('babelify', {
         presets: ['es2015']
@@ -21,7 +21,7 @@ gulp.task('js', () => {
 
 gulp.task('css', () => {
     return gulp.src([ 
-        'style/src/app.css' 
+        'style/app.css' 
     ])
     .pipe(concatCss("public/style.css"))
     .pipe(cleanCSS())
@@ -29,6 +29,6 @@ gulp.task('css', () => {
 });
 
 gulp.task('default', ['js', 'css'], () => {
-    gulp.watch('script/src/app.js', ['js']);
-    gulp.watch('style/src/app.css', ['css']);
+    gulp.watch('script/**/*.js', ['js']);
+    gulp.watch('style/**/*.css', ['css']);
 });

@@ -1,42 +1,97 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    create: function create(input) {
+        return CodeMirror.fromTextArea(input, {
+            lineNumbers: true,
+            mode: 'xml',
+            htmlMode: false,
+            matchClosing: true
+        });
+    }
+};
+
+},{}],2:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = function (Editor, file) {
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+    this.file = null;
+    this.Editor = null;
+    this.request = new XMLHttpRequest();
 
-var _class = function () {
-    function _class(input, output) {
-        _classCallCheck(this, _class);
+    this.construct = function (Editor, file) {
+        var _this = this;
 
-        this.input = input;
+        this.file = file;
+        this.Editor = Editor;
+
+        this.request.open('GET', file);
+        this.request.onload = function () {
+            _this.Editor.setValue(_this.request.response);
+        };
+    };
+
+    this.load = function () {
+        this.request.send();
+    };
+
+    this.construct(Editor, file);
+};
+
+},{}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = XMLListGenerator;
+function XMLListGenerator(Editor, output) {
+    this.Editor = null;
+    this.ouput = null;
+
+    this.constructor = function (Editor, output) {
+        this.Editor = Editor;
         this.output = output;
+
         this.bind();
-    }
+    };
 
-    _createClass(_class, [{
-        key: "bind",
-        value: function bind() {
-            //this.input.
-        }
-    }]);
+    this.bind = function () {
+        var _this = this;
 
-    return _class;
-}();
+        CodeMirror.on(this.Editor, 'change', function () {
+            var xml = new DOMParser().parseFromString(_this.Editor.getValue(), "text/xml");
 
-exports.default = _class;
-;
+            console.log(xml);
+        });
+    };
 
-},{}],2:[function(require,module,exports){
+    this.constructor(Editor, output);
+};
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var _XMLListGenerator = require('./XMLListGenerator');
 
 var _XMLListGenerator2 = _interopRequireDefault(_XMLListGenerator);
+
+var _EditorFactory = require('./EditorFactory');
+
+var _EditorFactory2 = _interopRequireDefault(_EditorFactory);
+
+var _XMLDataLoader = require('./XMLDataLoader');
+
+var _XMLDataLoader2 = _interopRequireDefault(_XMLDataLoader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,27 +100,11 @@ var $ = document.querySelector.bind(document);
 
 window.addEventListener('load', function () {
 
-    var input = $('#xml');
-    var output = $('#list');
-    var Editor = EditorFactory.create(input);
-    var ListGenerator = new _XMLListGenerator2.default(input, output);
-    var DataLoader = new XMLDataLoader(input, '/items.xml');
+    var Editor = _EditorFactory2.default.create($('#xml'));
+    var ListGenerator = new _XMLListGenerator2.default(Editor, $('#list'), $('.error'));
+    var DataLoader = new _XMLDataLoader2.default(Editor, '/items.xml');
 
     DataLoader.load();
-
-    var editor = CodeMirror.fromTextArea(input, {
-        lineNumbers: true,
-        mode: 'xml',
-        htmlMode: false,
-        matchClosing: true
-    });
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/items.xml');
-    xhr.onload = function () {
-        console.log(xhr);
-    };
-    xhr.send();
 }, false);
 
-},{"./XMLListGenerator":1}]},{},[2]);
+},{"./EditorFactory":1,"./XMLDataLoader":2,"./XMLListGenerator":3}]},{},[4]);

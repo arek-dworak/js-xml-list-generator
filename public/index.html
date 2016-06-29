@@ -9,14 +9,19 @@
 <body>
     <div class="wrapper">
         <section>
-            <label for="xml">Insert XML here: <span class="error"></span></label>
-            <textarea id="xml" name="xml"></textarea>
+            <label for="depth">Starting depth: </label>
+            <select id="depth"></select>
+            <label for="editor">Insert XML here: </label>
+            <textarea data-mode="xml" id="editor"></textarea>
+            <label for="json_output">JSON Output: </label>
+            <textarea data-mode="javascript" id="json_output"></textarea>
+            <section id="list"></section>
         </section>
-        <section id="list"></section>
     </div>
     
     <script src="bower_components/codemirror/lib/codemirror.js"></script>
     <script src="bower_components/codemirror/mode/xml/xml.js"></script>
+    <script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

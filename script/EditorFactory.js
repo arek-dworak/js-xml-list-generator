@@ -4,7 +4,7 @@ export default
     create(input) {
         return CodeMirror.fromTextArea(input, {
             lineNumbers: true,
-            mode: 'xml',
+            mode: input.dataset.mode,
             htmlMode: false,
             matchClosing: true
         });

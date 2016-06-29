@@ -6,7 +6,7 @@ body {
 
 .wrapper {
     width: 80%;
-    margin: 5% auto;
+    margin: 1em auto;
     padding: 2.5%;
     background: #fff;
 
@@ -17,4 +17,16 @@ body {
 
 .CodeMirror {
     border: 1px solid #ccc;
+    height: 15em;
+}
+
+label[for=editor] {
+    display: block;
+    margin-top: 1em;
+}
+
+#list {
+    border: 1px solid #ccc;
+    margin-top: 1em;
+    padding: 1em;
 }
